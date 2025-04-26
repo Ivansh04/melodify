@@ -22,36 +22,51 @@ const LeftSidebar = () => {
 			{/* Navigation menu */}
 
 			<div className='rounded-lg bg-zinc-900 p-4'>
-				<div className='space-y-2'>
-					<Link
-						to={"/"}
-						className={cn(
-							buttonVariants({
-								variant: "ghost",
-								className: "w-full justify-start text-white hover:bg-zinc-800",
-							})
-						)}
-					>
-						<HomeIcon className='mr-2 size-5' />
-						<span className='hidden md:inline'>Home</span>
-					</Link>
+	<div className='space-y-2'>
+		<Link
+			to={"/"}
+			className={cn(
+				buttonVariants({
+					variant: "ghost",
+					className: "w-full justify-start text-white hover:bg-zinc-800",
+				})
+			)}
+		>
+			<HomeIcon className='mr-2 size-5' />
+			<span className='hidden md:inline'>Home</span>
+		</Link>
 
-					<SignedIn>
-						<Link
-							to={"/chat"}
-							className={cn(
-								buttonVariants({
-									variant: "ghost",
-									className: "w-full justify-start text-white hover:bg-zinc-800",
-								})
-							)}
-						>
-							<MessageCircle className='mr-2 size-5' />
-							<span className='hidden md:inline'>Messages</span>
-						</Link>
-					</SignedIn>
-				</div>
-			</div>
+		<SignedIn>
+			<Link
+				to={"/chat"}
+				className={cn(
+					buttonVariants({
+						variant: "ghost",
+						className: "w-full justify-start text-white hover:bg-zinc-800",
+					})
+				)}
+			>
+				<MessageCircle className='mr-2 size-5' />
+				<span className='hidden md:inline'>Messages</span>
+			</Link>
+
+			{/* ✅ New Library Button */}
+			<Link
+				to={"/library"}
+				className={cn(
+					buttonVariants({
+						variant: "ghost",
+						className: "w-full justify-start text-white hover:bg-zinc-800",
+					})
+				)}
+			>
+				<Library className='mr-2 size-5' />
+				<span className='hidden md:inline'>Library</span>
+			</Link>
+		</SignedIn>
+	</div>
+</div>
+
 
 			{/* Library section */}
 			<div className='flex-1 rounded-lg bg-zinc-900 p-4'>

@@ -6,7 +6,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import SectionGrid from "./components/SectionGrid";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 
+const getGreeting = () => {
+	const hour = new Date().getHours();
+	if (hour >= 5 && hour < 12) return "Good Morning";
+	if (hour >= 12 && hour < 17) return "Good Afternoon";
+	if (hour >= 17 && hour < 21) return "Good Evening";
+	return "Good Night";
+};
+
 const HomePage = () => {
+	const greeting = getGreeting(); // 👈 Only call once, no need for useState
+
 	const {
 		fetchFeaturedSongs,
 		fetchMadeForYouSongs,
@@ -37,7 +47,7 @@ const HomePage = () => {
 			<Topbar />
 			<ScrollArea className='h-[calc(100vh-180px)]'>
 				<div className='p-4 sm:p-6'>
-					<h1 className='text-2xl sm:text-3xl font-bold mb-6'>Good afternoon</h1>
+					<h1 className='text-2xl sm:text-3xl font-bold mb-6'>{greeting}</h1>
 					<FeaturedSection />
 
 					<div className='space-y-8'>
@@ -49,4 +59,5 @@ const HomePage = () => {
 		</main>
 	);
 };
+
 export default HomePage;

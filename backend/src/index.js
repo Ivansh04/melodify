@@ -16,8 +16,8 @@ import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stat.route.js";
 import authRoutes from "./routes/auth.route.js";
-import searchRoutes from "./routes/search.route.js"; // ✅ Import search route
-
+import searchRoutes from "./routes/search.route.js"; 
+import playlistRoutes from "./routes/playlist.route.js"; 
 dotenv.config();
 
 const __dirname = path.resolve();
@@ -70,7 +70,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
-app.use("/api/search", searchRoutes); // ✅ Add search route
+app.use("/api/search", searchRoutes);
+app.use("/api/playlists", playlistRoutes);
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "../frontend/dist")));
@@ -83,6 +84,11 @@ if (process.env.NODE_ENV === "production") {
 app.use((err, req, res, next) => {
 	res.status(500).json({ message: process.env.NODE_ENV === "production" ? "Internal server error" : err.message });
 });
+
+process.on("unhandledRejection", (reason, promise) => {
+	console.error("Unhandled Rejection:", reason);
+  });
+  
 
 httpServer.listen(PORT, () => {
 	console.log("Server is running on port " + PORT);

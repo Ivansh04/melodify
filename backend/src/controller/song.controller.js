@@ -1,5 +1,6 @@
 import { Song } from "../models/song.model.js";
 
+// ✅ Get all songs
 export const getAllSongs = async (req, res, next) => {
 	try {
 		const songs = await Song.find().sort({ createdAt: -1 });
@@ -9,6 +10,7 @@ export const getAllSongs = async (req, res, next) => {
 	}
 };
 
+// ✅ Get featured songs
 export const getFeaturedSongs = async (req, res, next) => {
 	try {
 		const songs = await Song.aggregate([
@@ -29,6 +31,7 @@ export const getFeaturedSongs = async (req, res, next) => {
 	}
 };
 
+// ✅ Get personalized songs
 export const getMadeForYouSongs = async (req, res, next) => {
 	try {
 		const songs = await Song.aggregate([
@@ -49,6 +52,7 @@ export const getMadeForYouSongs = async (req, res, next) => {
 	}
 };
 
+// ✅ Get trending songs
 export const getTrendingSongs = async (req, res, next) => {
 	try {
 		const songs = await Song.aggregate([
@@ -69,7 +73,7 @@ export const getTrendingSongs = async (req, res, next) => {
 	}
 };
 
-// New search functionality
+// ✅ Search Songs
 export const searchSongs = async (req, res, next) => {
 	try {
 		const { query } = req.query;
@@ -79,8 +83,8 @@ export const searchSongs = async (req, res, next) => {
 
 		const songs = await Song.find({
 			$or: [
-				{ title: { $regex: query, $options: "i" } }, // Case-insensitive search for title
-				{ artist: { $regex: query, $options: "i" } }, // Case-insensitive search for artist
+				{ title: { $regex: query, $options: "i" } },
+				{ artist: { $regex: query, $options: "i" } },
 			],
 		});
 
@@ -89,3 +93,28 @@ export const searchSongs = async (req, res, next) => {
 		next(error);
 	}
 };
+
+// ✅ Get full song by ID (with lyrics)
+export const getSongById = async (req, res, next) => {
+	try {
+		const song = await Song.findById(req.params.id);
+		if (!song) return res.status(404).json({ message: "Song not found" });
+		res.json(song);
+	} catch (error) {
+		next(error);
+	}
+};
+
+// ✅ Get only lyrics by song ID
+export const getLyricsBySongId = async (req, res, next) => {
+	try {
+	  const { songId } = req.params;
+	  const song = await Song.findById(songId);
+	  if (!song) {
+		return res.status(404).json({ message: "Song not found" });
+	  }
+	  res.json({ lyrics: song.lyrics || [] });
+	} catch (error) {
+	  next(error);
+	}
+  };
