@@ -12,7 +12,7 @@ const SplashScreen = () => {
     const timer = setTimeout(() => {
       setShowSplash(false);
       navigate("/"); // Redirect to Main App Page
-    }, 3500);
+    }, 2300);
 
     // Simulate loading progress with smoother progression
     const progressInterval = setInterval(() => {

@@ -65,7 +65,7 @@ export const PlaybackControls = () => {
   return (
     <footer className="h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4">
       <div className="flex justify-between items-center h-full max-w-[1800px] mx-auto">
-        {/* Currently playing song */}
+        {/* Left: Song info */}
         <div className="hidden sm:flex items-center gap-4 min-w-[180px] w-[30%]">
           {currentSong && (
             <>
@@ -86,47 +86,78 @@ export const PlaybackControls = () => {
           )}
         </div>
 
-        {/* Player controls */}
+        {/* Middle: Player Controls */}
         <div className="flex flex-col items-center gap-2 flex-1 max-w-full sm:max-w-[45%]">
           <div className="flex items-center gap-4 sm:gap-6">
-            <Button size="icon" variant="ghost" className="hidden sm:inline-flex hover:text-white text-zinc-400">
-              <Shuffle className="h-4 w-4" />
-            </Button>
+            {/* Shuffle */}
+            <div className="relative group hidden sm:block">
+              <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
+                <Shuffle className="h-4 w-4" />
+              </Button>
+              <span className="absolute bottom-10 left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
+                Shuffle
+              </span>
+            </div>
 
-            <Button
-              size="icon"
-              variant="ghost"
-              className="hover:text-white text-zinc-400"
-              onClick={playPrevious}
-              disabled={!currentSong}
-            >
-              <SkipBack className="h-4 w-4" />
-            </Button>
+            {/* Previous */}
+            <div className="relative group">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover:text-white text-zinc-400"
+                onClick={playPrevious}
+                disabled={!currentSong}
+              >
+                <SkipBack className="h-4 w-4" />
+              </Button>
+              <span className="absolute bottom-10 left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
+                Previous
+              </span>
+            </div>
 
-            <Button
-              size="icon"
-              className="bg-white hover:bg-white/80 text-black rounded-full h-8 w-8"
-              onClick={togglePlay}
-              disabled={!currentSong}
-            >
-              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-            </Button>
+            {/* Play / Pause */}
+            <div className="relative group">
+              <Button
+                size="icon"
+                className="bg-white hover:bg-white/80 text-black rounded-full h-8 w-8"
+                onClick={togglePlay}
+                disabled={!currentSong}
+              >
+                {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+              </Button>
+              <span className="absolute bottom-12 left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
+                {isPlaying ? "Pause" : "Play"}
+              </span>
+            </div>
 
-            <Button
-              size="icon"
-              variant="ghost"
-              className="hover:text-white text-zinc-400"
-              onClick={playNext}
-              disabled={!currentSong}
-            >
-              <SkipForward className="h-4 w-4" />
-            </Button>
+            {/* Next */}
+            <div className="relative group">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover:text-white text-zinc-400"
+                onClick={playNext}
+                disabled={!currentSong}
+              >
+                <SkipForward className="h-4 w-4" />
+              </Button>
+              <span className="absolute bottom-10 left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
+                Next
+              </span>
+            </div>
 
-            <Button size="icon" variant="ghost" className="hidden sm:inline-flex hover:text-white text-zinc-400">
-              <Repeat className="h-4 w-4" />
-            </Button>
+            {/* Repeat */}
+            <div className="relative group hidden sm:block">
+              <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
+                <Repeat className="h-4 w-4" />
+              </Button>
+              <span className="absolute bottom-10 left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
+                Repeat
+              </span>
+            </div>
           </div>
 
+          {/* Progress slider */}
           <div className="hidden sm:flex items-center gap-2 w-full">
             <div className="text-xs text-zinc-400">{formatTime(currentTime)}</div>
             <Slider
@@ -140,9 +171,9 @@ export const PlaybackControls = () => {
           </div>
         </div>
 
-        {/* Volume and options */}
+        {/* Right: Volume and options */}
         <div className="hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end">
-          {/* ✅ Lyrics button with tooltip */}
+          {/* Lyrics */}
           <div className="relative group">
             <Button
               size="icon"
@@ -158,7 +189,7 @@ export const PlaybackControls = () => {
             </span>
           </div>
 
-          {/* ✅ Queue button with tooltip */}
+          {/* Queue */}
           <div className="relative group">
             <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
               <ListMusic className="h-4 w-4" />
@@ -168,21 +199,24 @@ export const PlaybackControls = () => {
             </span>
           </div>
 
-          {/* ✅ Connect button with tooltip */}
+          {/* Connect */}
           <div className="relative group">
             <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
               <Laptop2 className="h-4 w-4" />
             </Button>
             <span className="absolute bottom-10 left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
-              Connect to a device
+              Connect
             </span>
           </div>
 
-          {/* Volume control */}
-          <div className="flex items-center gap-2">
+          {/* Volume */}
+          <div className="relative group flex items-center gap-2">
             <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
               <Volume1 className="h-4 w-4" />
             </Button>
+            <span className="absolute bottom-10 left-0 transform scale-0 group-hover:scale-100 transition bg-zinc-700 text-white text-xs rounded py-1 px-2">
+              Volume
+            </span>
             <Slider
               value={[volume]}
               max={100}
